@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PacketVault — Cisco PT File Manager</title>
+  <meta name="description" content="Cisco Packet Tracer–inspired secure lab file storage and sharing platform."/>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml"/>
+</head>
+<body>
+<div class="pt-shell">
+
+  <!--═════════════════════════════════════════════════════
+      MENU BAR  (light gray, exactly like PT's title bar)
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-menubar">
+    <div class="pt-app-icon">
+      <img src="/img/logo.svg" alt="PacketVault Logo" style="width:22px;height:22px;object-fit:contain;"/>
+      <span class="pt-app-name">PacketVault</span>
+    </div>
+
+    <nav class="pt-menu-nav">
+      <span class="pt-menu-item">File</span>
+      <span class="pt-menu-item">Edit</span>
+      <span class="pt-menu-item">Options</span>
+      <span class="pt-menu-item">View</span>
+      <span class="pt-menu-item">Tools</span>
+      <span class="pt-menu-item">Extensions</span>
+      <span class="pt-menu-item">Window</span>
+      <span class="pt-menu-item">Help</span>
+    </nav>
+
+    <div class="pt-menu-right">
+      <a href="/admin.html" style="font-size:11px;font-weight:600;color:#0060b4;padding:1px 8px;border:1px solid #9a9a9a;border-radius:2px;background:linear-gradient(180deg,#ececec,#d8d8d8)">⚙ Admin</a>
+      <div class="pt-help-btn">?</div>
+    </div>
+  </div>
+
+  <!--═════════════════════════════════════════════════════
+      TOOLBAR ROW 1 (file operations, undo, zoom)
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-toolbar" style="height:var(--tb1-h)">
+    <!-- File ops -->
+    <div class="tb-group">
+      <button class="tb-btn" title="New">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Open">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Save">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Print">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Info / Properties -->
+    <div class="tb-group">
+      <button class="tb-btn" title="Properties">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Clipboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Undo / Redo -->
+    <div class="tb-group">
+      <button class="tb-btn" title="Undo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M3 7v6h6"/><path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Redo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 7v6h-6"/><path d="M3 17a9 9 0 019-9 9 9 0 016 2.3L21 13"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Zoom -->
+    <div class="tb-group">
+      <button class="tb-btn" title="Zoom In">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Zoom Out">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Fit to Screen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- View toggles -->
+    <div class="tb-group">
+      <button class="tb-btn" title="Toggle Grid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Screenshot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- UPLOAD / DOWNLOAD / REFRESH — Primary actions -->
+    <div class="tb-group">
+      <button class="tb-action-btn primary" id="btnUpload" title="Upload lab files (admin only)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Upload
+      </button>
+      <button class="tb-action-btn" id="btnRefresh" title="Refresh file list">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 4v6h6M23 20v-6h-6"/>
+          <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Search -->
+    <div class="tb-search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <input type="text" id="tbSearchInput" placeholder="Search files…" autocomplete="off"/>
+    </div>
+
+    <!-- Filter -->
+    <select class="tb-filter" id="tbTypeFilter">
+      <option value="all">All Types</option>
+      <option value=".pkt">.pkt</option>
+      <option value=".html">.html</option>
+      <option value=".js">.js</option>
+      <option value=".txt">.txt</option>
+      <option value=".zip">.zip</option>
+    </select>
+  </div>
+
+  <!--═════════════════════════════════════════════════════
+      TOOLBAR ROW 2 (drawing/select tools)
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-toolbar" style="height:var(--tb2-h)">
+    <div class="tb-group">
+      <!-- Select tool (active by default) -->
+      <button class="tb-btn active-tool" title="Select/Move">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4l7 18 3-7 7-3L4 4z"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Move layout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Delete">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Drawing shapes -->
+    <div class="tb-group">
+      <button class="tb-btn" title="Add Rectangle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Add Ellipse">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="12" rx="10" ry="7"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Draw Line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="19" x2="19" y2="5"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Pencil / Draw">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Notes -->
+    <div class="tb-group">
+      <button class="tb-btn" title="Add Text Note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Email / Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22 6 12 13 2 6"/>
+        </svg>
+      </button>
+      <button class="tb-btn" title="Inspect Packet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22 6 12 13 2 6"/>
+          <line x1="12" y1="13" x2="12" y2="20"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Coord display from canvas mouse -->
+    <div style="display:flex;align-items:center;gap:6px;margin-left:6px">
+      <span style="font-size:10.5px;color:#5a5a5a;font-family:'Courier New',monospace" id="coordDisplay">x: 0, y: 0</span>
+    </div>
+  </div>
+
+  <!--═════════════════════════════════════════════════════
+      NAVIGATION TABS BAR (blue, PT signature look)
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-navtabs">
+    <button class="pt-navtab active" id="tabLogical">
+      <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>
+      Logical
+    </button>
+    <button class="pt-navtab" id="tabPhysical">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="2" width="12" height="12" rx="1"/>
+        <line x1="2" y1="6" x2="14" y2="6"/>
+        <line x1="6" y1="6" x2="6" y2="14"/>
+      </svg>
+      Physical
+    </button>
+
+    <span class="nav-coords">x: <span id="mouseX">0</span>, y: <span id="mouseY">0</span></span>
+
+    <div class="nav-right">
+      <span class="nav-root-label">Root</span>
+      <button class="nav-icon-btn" title="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="nav-icon-btn" title="Network">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/>
+        </svg>
+      </button>
+      <button class="nav-icon-btn" title="User">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <div class="nav-clock" id="clockDisplay">00:00:00</div>
+    </div>
+  </div>
+
+  <!--═════════════════════════════════════════════════════
+      MAIN WORKSPACE ROW (canvas + files panel)
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-workspace">
+
+    <!-- Canvas (white, animated network topology) -->
+    <div class="pt-canvas-area" id="canvasWrapper">
+      <canvas id="networkCanvas"></canvas>
+
+      <!-- Drag and drop overlay -->
+      <div class="drop-zone-overlay" id="dropZoneOverlay">
+        <div class="dzo-icon">📡</div>
+        <div class="dzo-text">Drop Files to Upload</div>
+        <div class="dzo-sub">Admin authentication required · .pkt .html .js .txt .zip · max 20MB</div>
+      </div>
+
+      <!-- Horizontal scrollbar (decorative, matches PT) -->
+      <div class="canvas-h-scroll">
+        <div class="canvas-h-scroll-thumb"></div>
+      </div>
+    </div>
+
+    <!--─── FILES PANEL (right side dock) ──────────── -->
+    <div class="pt-files-panel">
+      <!-- Header -->
+      <div class="pf-header">
+        <div class="pf-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+          </svg>
+          Lab Files
+        </div>
+        <span class="pf-count" id="fileCountBadge">0</span>
+      </div>
+
+      <!-- Search + Filters -->
+      <div class="pf-controls">
+        <div class="pf-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" id="panelSearch" placeholder="Search files…" autocomplete="off"/>
+        </div>
+        <div class="pf-filter-chips">
+          <button class="pf-chip active" data-ext="all">All</button>
+          <button class="pf-chip" data-ext=".pkt">.pkt</button>
+          <button class="pf-chip" data-ext=".html">.html</button>
+          <button class="pf-chip" data-ext=".js">.js</button>
+          <button class="pf-chip" data-ext=".txt">.txt</button>
+          <button class="pf-chip" data-ext=".zip">.zip</button>
+        </div>
+      </div>
+
+      <!-- File list -->
+      <div class="pf-list" id="filesList">
+        <div class="pf-spinner"></div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pf-pagination" id="paginationBar"></div>
+    </div>
+  </div>
+
+  <!--═════════════════════════════════════════════════════
+      BOTTOM PANEL (device palette + cables + scenario)
+      — Exact Cisco Packet Tracer layout —
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-bottom">
+
+    <!--── Device Palette (left side, 2 rows) ──────── -->
+    <div class="pt-device-palette">
+      <!-- Row 1: Device categories -->
+      <div class="dp-categories">
+        <!-- End Devices -->
+        <button class="dp-cat-btn active" title="End Devices" onclick="selectCategory(this,'end')">
+          <svg viewBox="0 0 40 32" fill="none">
+            <rect x="4" y="4" width="32" height="20" rx="2" fill="#8ab0d8" stroke="#4a70a0" stroke-width="1.5"/>
+            <rect x="7" y="7" width="26" height="14" rx="1" fill="#c0d8f0"/>
+            <rect x="12" y="24" width="16" height="3" fill="#7090b8"/>
+            <rect x="8" y="27" width="24" height="3" rx="1" fill="#607898"/>
+          </svg>
+          <span class="dp-cat-label">End</span>
+        </button>
+
+        <!-- Network Devices -->
+        <button class="dp-cat-btn" title="Network Devices (Routers, Switches)" onclick="selectCategory(this,'network')">
+          <svg viewBox="0 0 40 32" fill="none">
+            <circle cx="20" cy="16" r="12" fill="#c0d8f0" stroke="#4a70a0" stroke-width="1.5"/>
+            <line x1="8" y1="16" x2="32" y2="16" stroke="#4a70a0" stroke-width="1.2"/>
+            <line x1="20" y1="4" x2="20" y2="28" stroke="#4a70a0" stroke-width="1.2"/>
+            <path d="M9 10 Q20 4 31 10" stroke="#4a70a0" stroke-width="0.8" fill="none"/>
+            <path d="M9 22 Q20 28 31 22" stroke="#4a70a0" stroke-width="0.8" fill="none"/>
+            <circle cx="20" cy="16" r="3" fill="#0060b0"/>
+          </svg>
+          <span class="dp-cat-label">Network</span>
+        </button>
+
+        <!-- Security -->
+        <button class="dp-cat-btn" title="Security Devices" onclick="selectCategory(this,'security')">
+          <svg viewBox="0 0 40 32" fill="none">
+            <path d="M20 4 L34 10 L34 22 Q34 30 20 30 Q6 30 6 22 L6 10 Z" fill="#c0d8f0" stroke="#4a70a0" stroke-width="1.5"/>
+            <path d="M20 10 L20 22 M15 16 L20 10 L25 16" stroke="#0060b0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="dp-cat-label">Security</span>
+        </button>
+
+        <!-- Wireless -->
+        <button class="dp-cat-btn" title="Wireless Devices" onclick="selectCategory(this,'wireless')">
+          <svg viewBox="0 0 40 32" fill="none">
+            <path d="M6 22 Q20 8 34 22" stroke="#4a70a0" stroke-width="1.5" fill="none"/>
+            <path d="M11 26 Q20 16 29 26" stroke="#4a70a0" stroke-width="1.5" fill="none"/>
+            <circle cx="20" cy="28" r="3" fill="#0060b0"/>
+            <line x1="20" y1="28" x2="20" y2="8" stroke="#60a0e0" stroke-width="1"/>
+          </svg>
+          <span class="dp-cat-label">Wireless</span>
+        </button>
+
+        <!-- WAN -->
+        <button class="dp-cat-btn" title="WAN Emulation" onclick="selectCategory(this,'wan')">
+          <svg viewBox="0 0 40 32" fill="none">
+            <rect x="6" y="8" width="28" height="16" rx="2" fill="#c0d8f0" stroke="#4a70a0" stroke-width="1.5"/>
+            <rect x="10" y="12" width="8" height="8" rx="1" fill="#0060b0"/>
+            <rect x="22" y="12" width="8" height="8" rx="1" fill="#0060b0"/>
+            <line x1="18" y1="16" x2="22" y2="16" stroke="#fff" stroke-width="1.5"/>
+          </svg>
+          <span class="dp-cat-label">WAN</span>
+        </button>
+      </div>
+
+      <!-- Row 2: Device items for selected category -->
+      <div class="dp-items" id="dpItems">
+        <!-- End devices (default) - populated by JS but defined here initially -->
+        <div class="dp-item selected" data-tip="PC">
+          <div class="dp-item-icon">
+            <svg viewBox="0 0 40 34" fill="none">
+              <rect x="3" y="3" width="34" height="22" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/>
+              <rect x="6" y="6" width="28" height="16" rx="1" fill="#8ab8e8"/>
+              <rect x="13" y="25" width="14" height="3" fill="#9ab8d0"/>
+              <rect x="9" y="28" width="22" height="3" rx="1" fill="#6a90b8"/>
+            </svg>
+          </div>
+          <span class="dp-item-name">PC-PT</span>
+        </div>
+        <div class="dp-item" data-tip="Server">
+          <div class="dp-item-icon">
+            <svg viewBox="0 0 40 34" fill="none">
+              <rect x="4" y="3" width="32" height="10" rx="1.5" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/>
+              <rect x="4" y="16" width="32" height="10" rx="1.5" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/>
+              <circle cx="30" cy="8" r="2.5" fill="#00c853"/>
+              <circle cx="30" cy="21" r="2.5" fill="#00c853"/>
+              <rect x="7" y="6" width="16" height="4" rx="1" fill="#a0b8d0"/>
+              <rect x="7" y="18" width="16" height="4" rx="1" fill="#a0b8d0"/>
+            </svg>
+          </div>
+          <span class="dp-item-name">Server-PT</span>
+        </div>
+        <div class="dp-item" data-tip="Laptop">
+          <div class="dp-item-icon">
+            <svg viewBox="0 0 40 34" fill="none">
+              <rect x="6" y="4" width="28" height="18" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/>
+              <rect x="9" y="7" width="22" height="12" rx="1" fill="#8ab8e8"/>
+              <path d="M2 22 L6 22 L34 22 L38 22 L38 26 Q38 28 36 28 L4 28 Q2 28 2 26 Z" fill="#a0b8d0" stroke="#4a70a0" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="dp-item-name">Laptop</span>
+        </div>
+        <div class="dp-item" data-tip="Tablet / Phone">
+          <div class="dp-item-icon">
+            <svg viewBox="0 0 40 34" fill="none">
+              <rect x="11" y="2" width="18" height="30" rx="3" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/>
+              <rect x="14" y="6" width="12" height="20" rx="1" fill="#8ab8e8"/>
+              <circle cx="20" cy="29" r="1.5" fill="#4a70a0"/>
+            </svg>
+          </div>
+          <span class="dp-item-name">Phone</span>
+        </div>
+      </div>
+    </div>
+
+    <!--── Cable / Connection Types (middle section) ── -->
+    <div class="pt-cable-area">
+      <div class="cable-row">
+        <!-- Auto-select cable -->
+        <button class="cable-btn active" title="Automatically Choose Connection Type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </button>
+
+        <!-- Console cable -->
+        <button class="cable-btn" title="Console" onclick="selectCable(this,'Console')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+        </button>
+
+        <!-- Copper Straight-Through -->
+        <button class="cable-btn" title="Copper Straight-Through" onclick="selectCable(this,'Copper Straight-Through')">
+          <svg viewBox="0 0 36 12" fill="none">
+            <line x1="0" y1="6" x2="36" y2="6" stroke="#d08000" stroke-width="3"/>
+          </svg>
+        </button>
+
+        <!-- Copper Cross-Over -->
+        <button class="cable-btn" title="Copper Cross-Over" onclick="selectCable(this,'Copper Cross-Over')">
+          <svg viewBox="0 0 36 12" fill="none">
+            <line x1="0" y1="2" x2="36" y2="10" stroke="#d08000" stroke-width="2.5"/>
+            <line x1="0" y1="10" x2="36" y2="2" stroke="#d08000" stroke-width="2.5"/>
+          </svg>
+        </button>
+
+        <!-- Fiber optic -->
+        <button class="cable-btn" title="Fiber Optic" onclick="selectCable(this,'Fiber Optic')">
+          <svg viewBox="0 0 36 12" fill="none">
+            <path d="M0 6 Q9 0 18 6 Q27 12 36 6" stroke="#e00" stroke-width="2.5" fill="none"/>
+          </svg>
+        </button>
+
+        <!-- Serial DCE -->
+        <button class="cable-btn" title="Serial DCE" onclick="selectCable(this,'Serial DCE')">
+          <svg viewBox="0 0 36 12" fill="none">
+            <line x1="0" y1="6" x2="26" y2="6" stroke="#0060b0" stroke-width="2.5"/>
+            <path d="M26 3 L36 6 L26 9 Z" fill="#0060b0"/>
+          </svg>
+        </button>
+
+        <!-- Serial DTE -->
+        <button class="cable-btn" title="Serial DTE" onclick="selectCable(this,'Serial DTE')">
+          <svg viewBox="0 0 36 12" fill="none">
+            <line x1="10" y1="6" x2="36" y2="6" stroke="#0060b0" stroke-width="2.5"/>
+            <path d="M10 3 L0 6 L10 9 Z" fill="#0060b0"/>
+          </svg>
+        </button>
+
+        <!-- Wireless -->
+        <button class="cable-btn" title="Wireless" onclick="selectCable(this,'Wireless')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0060b0" stroke-width="2">
+            <path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/>
+            <path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/>
+          </svg>
+        </button>
+
+        <!-- S (straight) -->
+        <button class="cable-btn" title="Straight Thin" onclick="selectCable(this,'Straight Thin')">
+          <span style="font-size:16px;font-weight:700;color:#555">S</span>
+        </button>
+
+        <!-- M (multi) -->
+        <button class="cable-btn" title="Multi-port" onclick="selectCable(this,'Multiport')">
+          <span style="font-size:16px;font-weight:700;color:#555">M</span>
+        </button>
+
+        <!-- Dotted lines -->
+        <button class="cable-btn" title="Dotted" onclick="selectCable(this,'Dotted')">
+          <svg viewBox="0 0 36 12" fill="none">
+            <line x1="0" y1="6" x2="36" y2="6" stroke="#808080" stroke-width="2.5" stroke-dasharray="3,3"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Selected cable label -->
+      <div class="cable-label" id="cableLabel">Automatically Choose Connection Type</div>
+    </div>
+
+    <!--── Scenario / PDU Panel (right side of bottom) ── -->
+    <div class="pt-scenario">
+      <div class="scenario-top">
+        <select class="scenario-select" title="Scenario selector">
+          <option>Scenario 0</option>
+          <option>Scenario 1</option>
+          <option>Scenario 2</option>
+        </select>
+        <input type="checkbox" id="scenarioCb" style="cursor:pointer" title="Enable scenario"/>
+      </div>
+      <div class="scenario-btns">
+        <button class="scenario-btn">New</button>
+        <button class="scenario-btn">Delete</button>
+      </div>
+      <button class="toggle-pdu-btn">Toggle PDU List Window</button>
+    </div>
+  </div>
+
+  <!--═════════════════════════════════════════════════════
+      STATUS BAR (dark blue, Realtime/Simulation)
+  ══════════════════════════════════════════════════════ -->
+  <div class="pt-statusbar">
+    <div class="status-timer">
+      <span class="timer-label">Time:</span>
+      <div class="timer-value" id="statusTime">00:00:00</div>
+      <button class="timer-btn reset" title="Reset timer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </button>
+      <button class="timer-btn play" title="Play/Pause" id="runBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    </div>
+
+    <div class="status-message" id="statusMsg">Ready — PacketVault initialized</div>
+
+    <div class="status-mode-tabs">
+      <button class="smode-btn active" id="tabRealtime">
+        <span class="smode-dot"></span>Realtime
+      </button>
+      <button class="smode-btn" id="tabSim">≋ Simulation</button>
+    </div>
+  </div>
+
+</div><!-- /.pt-shell -->
+
+<!--═════════════════════════════════════════════════════
+    UPLOAD MODAL (Windows-style dialog, like PT)
+══════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="uploadModalBackdrop">
+  <div class="modal">
+    <div class="modal-titlebar">
+      <div class="modal-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Upload Lab Files
+      </div>
+      <button class="modal-close-btn" id="closeUploadModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-drop-zone" id="modalDropZone">
+        <div class="dz-icon">📁</div>
+        <div class="dz-title">Drag & Drop Files Here</div>
+        <div class="dz-hint">
+          Allowed: <strong>.pkt .html .js .txt .zip</strong> &nbsp;·&nbsp; Max: <strong>20 MB</strong>
+        </div>
+        <label class="dz-browse-btn" id="modalBrowseBtn">Browse…</label>
+        <input type="file" id="modalFileInput" multiple accept=".pkt,.html,.js,.txt,.zip" style="display:none"/>
+      </div>
+      <div class="upload-queue" id="modalUploadQueue"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn modal-btn-cancel" id="btnCancelUpload">Cancel</button>
+      <button class="modal-btn modal-btn-ok" id="btnUploadNow">Upload</button>
+    </div>
+  </div>
+</div>
+
+<!--═════════════════════════════════════════════════════
+    ADMIN LOGIN MODAL
+══════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="loginModalBackdrop">
+  <div class="modal">
+    <div class="modal-titlebar">
+      <div class="modal-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        Administrator Login
+      </div>
+      <button class="modal-close-btn" id="closeLoginModal">✕</button>
+    </div>
+    <div class="modal-body login-modal-body">
+      <form id="loginFormWs" autocomplete="off">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input class="form-input" id="wsUsername" type="text" placeholder="admin" required autocomplete="username"/>
+        </div>
+        <div class="form-group" style="margin-top:10px">
+          <label class="form-label">Password</label>
+          <input class="form-input" id="wsPassword" type="password" placeholder="••••••••" required autocomplete="current-password"/>
+        </div>
+        <div class="form-error" id="wsLoginError"></div>
+        <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:14px">
+          <button type="button" class="modal-btn modal-btn-cancel" onclick="document.getElementById('loginModalBackdrop').classList.remove('open')">Cancel</button>
+          <button type="submit" class="modal-btn modal-btn-ok">Sign In</button>
+        </div>
+      </form>
+    </div>
+    <div style="padding:6px 16px 10px;font-size:10.5px;color:#606060;border-top:1px solid #c8c8c8;background:#e8e8e8">
+      Students do not need to log in. Visit the workspace to download files.
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// Device category switcher (visual only)
+const dpItemSets = {
+  end: `
+    <div class="dp-item selected"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="3" y="3" width="34" height="22" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="6" y="6" width="28" height="16" fill="#8ab8e8"/><rect x="13" y="25" width="14" height="3" fill="#9ab8d0"/><rect x="9" y="28" width="22" height="3" rx="1" fill="#6a90b8"/></svg></div><span class="dp-item-name">PC-PT</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="4" y="3" width="32" height="10" rx="1.5" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="4" y="16" width="32" height="10" rx="1.5" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><circle cx="30" cy="8" r="2.5" fill="#00c853"/><circle cx="30" cy="21" r="2.5" fill="#00c853"/></svg></div><span class="dp-item-name">Server-PT</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="6" y="4" width="28" height="18" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="9" y="7" width="22" height="12" fill="#8ab8e8"/><path d="M2 22 L38 22 L38 26 Q38 28 36 28 L4 28 Q2 28 2 26 Z" fill="#a0b8d0" stroke="#4a70a0" stroke-width="1"/></svg></div><span class="dp-item-name">Laptop</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="11" y="2" width="18" height="30" rx="3" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="14" y="6" width="12" height="20" fill="#8ab8e8"/><circle cx="20" cy="29" r="1.5" fill="#4a70a0"/></svg></div><span class="dp-item-name">Phone</span></div>`,
+  network: `
+    <div class="dp-item selected"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><circle cx="20" cy="17" r="13" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><line x1="7" y1="17" x2="33" y2="17" stroke="#4a70a0" stroke-width="1.2"/><line x1="20" y1="4" x2="20" y2="30" stroke="#4a70a0" stroke-width="1.2"/><path d="M8 11 Q20 5 32 11" stroke="#4a70a0" stroke-width="0.8" fill="none"/><path d="M8 23 Q20 29 32 23" stroke="#4a70a0" stroke-width="0.8" fill="none"/><circle cx="20" cy="17" r="3" fill="#0060b0"/></svg></div><span class="dp-item-name">Router-PT</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="4" y="10" width="32" height="14" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="7" y="13" width="26" height="8" fill="#a0b8e0"/><rect x="9" y="15" width="3" height="4" rx="0.5" fill="#0060b0"/><rect x="14" y="15" width="3" height="4" rx="0.5" fill="#0060b0"/><rect x="19" y="15" width="3" height="4" rx="0.5" fill="#00a060"/><rect x="24" y="15" width="3" height="4" rx="0.5" fill="#00a060"/><circle cx="34" cy="17" r="2.5" fill="#00c853"/></svg></div><span class="dp-item-name">Switch-PT</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="4" y="10" width="32" height="14" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="7" y="13" width="26" height="8" fill="#a0b8e0"/><rect x="9" y="15" width="3" height="4" rx="0.5" fill="#0060b0"/><rect x="14" y="15" width="3" height="4" rx="0.5" fill="#0060b0"/><rect x="19" y="15" width="3" height="4" rx="0.5" fill="#0060b0"/><rect x="24" y="15" width="3" height="4" rx="0.5" fill="#0060b0"/></svg></div><span class="dp-item-name">Hub-PT</span></div>`,
+  security: `
+    <div class="dp-item selected"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><path d="M20 4 L34 9 L34 21 Q34 30 20 32 Q6 30 6 21 L6 9 Z" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><path d="M20 12 L20 22 M15 17 L20 12 L25 17" stroke="#0060b0" stroke-width="2" stroke-linecap="round"/></svg></div><span class="dp-item-name">Firewall</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="4" y="8" width="32" height="18" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="8" y="12" width="24" height="10" fill="#a0b8e0"/><circle cx="14" cy="17" r="3" fill="#0060b0"/><rect x="20" y="14" width="8" height="6" fill="#0060b0"/></svg></div><span class="dp-item-name">ASA 5505</span></div>`,
+  wireless: `
+    <div class="dp-item selected"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="8" y="14" width="24" height="14" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><path d="M6 12 Q20 4 34 12" stroke="#4a70a0" stroke-width="1.5" fill="none"/><path d="M11 18 Q20 12 29 18" stroke="#4a70a0" stroke-width="1" fill="none"/><line x1="20" y1="4" x2="20" y2="14" stroke="#60a0e0" stroke-width="1"/></svg></div><span class="dp-item-name">Access Point</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="4" y="10" width="32" height="14" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="7" y="13" width="26" height="8" fill="#a0b8e0"/><path d="M28 6 Q32 10 28 14" stroke="#4a70a0" stroke-width="1.5" fill="none"/><path d="M32 4 Q38 9 32 16" stroke="#4a70a0" stroke-width="1" fill="none"/></svg></div><span class="dp-item-name">WRT300N</span></div>`,
+  wan: `
+    <div class="dp-item selected"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><rect x="4" y="7" width="32" height="20" rx="2" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><rect x="8" y="11" width="10" height="12" rx="1" fill="#0060b0"/><rect x="22" y="11" width="10" height="12" rx="1" fill="#0060b0"/><line x1="18" y1="17" x2="22" y2="17" stroke="#fff" stroke-width="2"/></svg></div><span class="dp-item-name">DSL-Modem</span></div>
+    <div class="dp-item"><div class="dp-item-icon"><svg viewBox="0 0 40 34" fill="none"><circle cx="20" cy="17" r="13" fill="#c8dcf0" stroke="#4a70a0" stroke-width="1.5"/><path d="M8 12 Q20 4 32 12 Q32 22 20 28 Q8 22 8 12 Z" fill="none" stroke="#4a70a0" stroke-width="0.8"/></svg></div><span class="dp-item-name">Cloud-PT</span></div>`
+};
+
+function selectCategory(btn, cat) {
+  document.querySelectorAll('.dp-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('dpItems').innerHTML = dpItemSets[cat] || dpItemSets.end;
+}
+
+function selectCable(btn, label) {
+  document.querySelectorAll('.cable-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('cableLabel').textContent = label;
+}
+</script>
+<script src="/js/main.js"></script>
+</body>
+</html>
