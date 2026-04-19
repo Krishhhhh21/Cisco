@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="api-base" content=""/>
   <title>PacketVault — Admin Panel</title>
   <meta name="description" content="PacketVault Admin Dashboard — Manage lab files, uploads, and monitor downloads."/>
-  <link rel="stylesheet" href="/css/admin.css"/>
-  <link rel="icon" href="/img/logo.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="./css/admin.css"/>
+  <link rel="icon" href="./img/logo.svg" type="image/svg+xml"/>
 
   <style>
     /* Inline ext color overrides for admin table */
@@ -25,7 +26,7 @@
 <div class="login-page" id="loginPage">
   <div class="login-logo">
     <div class="login-logo-icon">
-      <img src="/img/logo.svg" alt="PacketVault" style="width:36px;height:36px;object-fit:contain;"/>
+      <img src="./img/logo.svg" alt="PacketVault" style="width:36px;height:36px;object-fit:contain;"/>
     </div>
     <div class="login-logo-text">
       <h1>PacketVault</h1>
@@ -60,7 +61,7 @@
       </form>
     </div>
     <div class="login-footer">
-      Students don't need login — visit <a href="/" style="color:var(--ad-accent)">the workspace</a> to download files.
+      Students don't need login — visit <a href="./index.html" style="color:var(--ad-accent)">the workspace</a> to download files.
     </div>
   </div>
 </div>
@@ -74,7 +75,7 @@
   <aside class="admin-sidebar">
     <div class="admin-logo">
       <div class="admin-logo-icon">
-        <img src="/img/logo.svg" alt="PacketVault" style="width:24px;height:24px;object-fit:contain;"/>
+        <img src="./img/logo.svg" alt="PacketVault" style="width:24px;height:24px;object-fit:contain;"/>
       </div>
       <div class="admin-logo-text">
         <strong>PacketVault</strong>
@@ -113,7 +114,7 @@
     </nav>
 
     <div class="admin-sidebar-footer">
-      <a href="/" class="back-link">
+      <a href="./index.html" class="back-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 18l-6-6 6-6"/>
         </svg>
@@ -360,6 +361,7 @@
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
 
-<script src="/js/admin.js"></script>
+<script src="./js/config.js"></script>
+<script src="./js/admin.js"></script>
 </body>
 </html>

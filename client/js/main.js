@@ -3,7 +3,8 @@
    User-facing: file list, download, search, network canvas
 ══════════════════════════════════════════════════════════ */
 
-const API = '';  // same origin
+const API =
+  typeof window !== 'undefined' && window.API_URL !== undefined ? window.API_URL : '';
 const FILES_PER_PAGE = 12;
 
 // State
@@ -340,7 +341,7 @@ document.getElementById('btnUploadNow')?.addEventListener('click', async () => {
   renderUploadQueue();
 
   try {
-    const res = await fetch(`${API}/admin/upload`, {
+    const res = await fetch(`${API}/upload`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${adminToken}` },
       body: form

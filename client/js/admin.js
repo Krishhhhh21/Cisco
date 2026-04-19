@@ -2,7 +2,8 @@
    PACKETVAULT — Admin Panel JavaScript
 ══════════════════════════════════════════════════════════ */
 
-const API = '';
+const API =
+  typeof window !== 'undefined' && window.API_URL !== undefined ? window.API_URL : '';
 let adminToken = localStorage.getItem('pv_admin_token') || '';
 let filesList = [];
 let filterExt = 'all';
@@ -293,7 +294,7 @@ document.getElementById('btnUploadFiles')?.addEventListener('click', async () =>
 
   // Simulate progress (XHR for real progress)
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${API}/admin/upload`);
+  xhr.open('POST', `${API}/upload`);
   xhr.setRequestHeader('Authorization', `Bearer ${adminToken}`);
 
   xhr.upload.addEventListener('progress', (e) => {

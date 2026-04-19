@@ -1,0 +1,14 @@
+# Render Blueprint — optional: connect repo and use this file for one-click deploy
+services:
+  - type: web
+    name: packetvault-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: SERVE_STATIC
+        value: "false"
+    # Set in Render dashboard: MONGO_URI, JWT_SECRET, ADMIN_USERNAME, ADMIN_PASSWORD, FRONTEND_ORIGINS

@@ -1,10 +1,14 @@
 {
   "name": "packetvault-server",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18"
+  },
   "description": "Cisco PacketVault — Secure File Management Platform",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
+    "start:api": "node index.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
